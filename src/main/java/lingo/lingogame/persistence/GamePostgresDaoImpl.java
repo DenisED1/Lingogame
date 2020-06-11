@@ -15,7 +15,7 @@ public class GamePostgresDaoImpl extends PostgresBaseDao implements GameDao {
 		List<Game> games = new ArrayList<Game>();
 
 		try (Connection con = super.getConnection()) {
-			String query = "SELECT * FROM GAME";
+			String query = "SELECT * FROM Game";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -38,7 +38,7 @@ public class GamePostgresDaoImpl extends PostgresBaseDao implements GameDao {
 		Game game = null;
 
 		try (Connection con = super.getConnection()) {
-			String query = "INSERT INTO game(score) VALUES(0)";
+			String query = "INSERT INTO Game(score) VALUES(0)";
 			PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pstmt.execute();
 			System.out.println(query);
@@ -61,7 +61,7 @@ public class GamePostgresDaoImpl extends PostgresBaseDao implements GameDao {
 		boolean result = false;
 
 		try (Connection con = super.getConnection()) {
-			String query = "UPDATE game SET playername = ?, score = ? WHERE gameid = ?";
+			String query = "UPDATE Game SET playername = ?, score = ? WHERE gameid = ?";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setString(1, game.getPlayername());
 			pstmt.setInt(2, game.getScore());

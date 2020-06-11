@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebListener;
 import lingo.lingogame.domain.Game;
 import lingo.lingogame.domain.GameTarget;
 import lingo.lingogame.domain.Language;
+import lingo.lingogame.domain.LanguageTarget;
 import lingo.lingogame.domain.Word;
 import lingo.lingogame.domain.WordTarget;
 import lingo.lingogame.persistence.DbGameTarget;
+import lingo.lingogame.persistence.DbLanguageTarget;
 import lingo.lingogame.persistence.DbWordTarget;
 
 /**
@@ -21,20 +23,10 @@ import lingo.lingogame.persistence.DbWordTarget;
 @WebListener
 public class App implements ServletContextListener {
 	private GameTarget gameTarget = new DbGameTarget();
-	/*public static void main(String[] args) {
-		System.out.println("Hello World!");
-
-		Language language = new Language(1, "Netherlands");
-
-		WordTarget wordTarget = new DbWordTarget();
-		Word word = wordTarget.getRandomWord("five_letter_words", language);
-		System.out.println(word.getWord());
-	}*/
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -43,6 +35,7 @@ public class App implements ServletContextListener {
 		//createGame();
 		//getAllGames();
 		//setEndGameData();
+		getAllLanguages();
 	}
 	
 	public void getRandomWord() {
@@ -72,5 +65,14 @@ public class App implements ServletContextListener {
 		Game game = new Game(1, "DenisED1", 110);
 		boolean bool = gameTarget.setEndGameData(game);
 		System.out.println(bool);
+	}
+	
+	public void getAllLanguages() {
+		LanguageTarget langTarget = new DbLanguageTarget();
+		List<Language> languages = langTarget.getAllLanguages();
+		for(Language language : languages) {
+			System.out.println("Langid: " + language.getLangid());
+			System.out.println("Language: " + language.getLanguage());
+		}
 	}
 }
