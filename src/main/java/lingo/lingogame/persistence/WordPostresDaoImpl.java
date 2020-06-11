@@ -14,8 +14,8 @@ public class WordPostresDaoImpl extends PostgresBaseDao implements WordDao {
 
 		try (Connection con = super.getConnection()) {
 			String query = String
-					.format("SELECT * FROM Words WHERE langid = %d AND length = %d OFFSET floor(random() * "
-							+ "(SELECT COUNT(*) FROM Words)) LIMIT 1", language.getLangid(), length);
+					.format("SELECT * FROM Word WHERE langid = %d AND length = %d OFFSET floor(random() * "
+							+ "(SELECT COUNT(*) FROM Word)) LIMIT 1", language.getLangid(), length);
 			PreparedStatement pstmt = con.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -36,7 +36,7 @@ public class WordPostresDaoImpl extends PostgresBaseDao implements WordDao {
 		Word word = null;
 
 		try (Connection con = super.getConnection()) {
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Words WHERE wordid = ?");
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Word WHERE wordid = ?");
 			pstmt.setInt(1, wordid);
 			ResultSet rs = pstmt.executeQuery();
 

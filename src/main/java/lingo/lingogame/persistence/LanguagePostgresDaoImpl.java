@@ -14,7 +14,7 @@ public class LanguagePostgresDaoImpl extends PostgresBaseDao implements Language
 		List<Language> languages = new ArrayList<Language>();
 
 		try (Connection con = super.getConnection()) {
-			String query = "SELECT * FROM Languages";
+			String query = "SELECT * FROM Language";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -36,7 +36,7 @@ public class LanguagePostgresDaoImpl extends PostgresBaseDao implements Language
 		Language language = null;
 
 		try (Connection con = super.getConnection()) {
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Languages WHERE langid = ?");
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Language WHERE langid = ?");
 			pstmt.setInt(1, langid);
 			ResultSet rs = pstmt.executeQuery();
 

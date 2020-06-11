@@ -17,7 +17,7 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 		Round round = null;
 
 		try (Connection con = super.getConnection()) {
-			String query = "INSERT INTO Rounds(guesses, gameid, wordid) VALUES(0, ?, ?)";
+			String query = "INSERT INTO Round(guesses, gameid, wordid) VALUES(0, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, game.getGameid());
 			pstmt.setInt(2, word.getWordid());
@@ -41,7 +41,7 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 		boolean result = false;
 
 		try (Connection con = super.getConnection()) {
-			String query = "UPDATE Rounds SET guesses = ? WHERE roundid = ?";
+			String query = "UPDATE Round SET guesses = ? WHERE roundid = ?";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, round.getGuesses());
 			pstmt.setInt(2, round.getRoundid());
@@ -60,7 +60,7 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 		List<Round> rounds = new ArrayList<Round>();
 
 		try (Connection con = super.getConnection()) {
-			String query = "SELECT * FROM Rounds where gameid = ?";
+			String query = "SELECT * FROM Round where gameid = ?";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, game.getGameid());
 			ResultSet rs = pstmt.executeQuery();
