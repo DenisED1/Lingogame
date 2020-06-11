@@ -9,27 +9,50 @@ import lingo.lingogame.domain.Language;
 import lingo.lingogame.domain.Word;
 
 public class WordPostresDaoImpl extends PostgresBaseDao implements WordDao {
-	public Word getRandomWord(String table, Language language) {
+	public Word getRandomWord(Language language, int length) {
 		Word word = null;
-		
-		try(Connection con = super.getConnection()){
-			String query = String.format("SELECT *" + 
-					"FROM %s WHERE langid = %d OFFSET floor(random() * " + 
-					"(SELECT COUNT(*) FROM %s)) LIMIT 1", table, language.getLangid(),table);
+
+		try (Connection con = super.getConnection()) {
+			String query = String
+					.format("SELECT * FROM Words WHERE langid = %d AND length = %d OFFSET floor(random() * "
+							+ "(SELECT COUNT(*) FROM Words)) LIMIT 1", language.getLangid(), length);
 			PreparedStatement pstmt = con.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			rs.next();
-			int wordid = rs.getInt("id");
+			int wordid = rs.getInt("wordid");
 			String wordstr = rs.getString("word");
-			
-			word = new Word(wordid, wordstr, language);
-			
-		}catch(SQLException sqle) {
+
+			word = new Word(wordid, wordstr, length, language);
+
+		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		
+
 		return word;
 	}
 
+	public Word getWordWithId(int wordid) {
+		Word word = null;
+
+		try (Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Words WHERE wordid = ?");
+			pstmt.setInt(1, wordid);
+			ResultSet rs = pstmt.executeQuery();
+
+			rs.next();
+			String wordstr = rs.getString("word");
+			int length = rs.getInt("length");
+			int langid = rs.getInt("langid");
+			
+			LanguageDao langDao = new LanguagePostgresDaoImpl();
+			Language language = langDao.getLanguageWithId(langid);
+
+			word = new Word(wordid, wordstr, length, language);
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return word;
+	}
 }

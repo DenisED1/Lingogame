@@ -10,10 +10,13 @@ import lingo.lingogame.domain.Game;
 import lingo.lingogame.domain.GameTarget;
 import lingo.lingogame.domain.Language;
 import lingo.lingogame.domain.LanguageTarget;
+import lingo.lingogame.domain.Round;
+import lingo.lingogame.domain.RoundTarget;
 import lingo.lingogame.domain.Word;
 import lingo.lingogame.domain.WordTarget;
 import lingo.lingogame.persistence.DbGameTarget;
 import lingo.lingogame.persistence.DbLanguageTarget;
+import lingo.lingogame.persistence.DbRoundTarget;
 import lingo.lingogame.persistence.DbWordTarget;
 
 /**
@@ -23,6 +26,13 @@ import lingo.lingogame.persistence.DbWordTarget;
 @WebListener
 public class App implements ServletContextListener {
 	private GameTarget gameTarget = new DbGameTarget();
+	private WordTarget wordTarget = new DbWordTarget();
+	private LanguageTarget langTarget = new DbLanguageTarget();
+	private RoundTarget roundTarget = new DbRoundTarget();
+	
+	private Language language = new Language(1, "Netherlands");
+	private Game game1 = new Game(1, "DenisED1", 110);
+	private Word word1 = new Word(1, "aagje", 5, language);
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
@@ -32,18 +42,26 @@ public class App implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		//getRandomWord();
+		//getWordWithId();
 		//createGame();
 		//getAllGames();
 		//setEndGameData();
-		getAllLanguages();
+		//getAllLanguages();
+		//getLanguageWithId();
+		//createRound();
+		//getAllRounds();
+		updateRound();
 	}
 	
-	public void getRandomWord() {
-		Language language = new Language(1, "Netherlands");
-
-		WordTarget wordTarget = new DbWordTarget();
-		Word word = wordTarget.getRandomWord("five_letter_words", language);
+	public void getRandomWord() {		
+		Word word = wordTarget.getRandomWord(language, 5);
 		System.out.println(word.getWord());
+	}
+	
+	public void getWordWithId() {
+		Word word = wordTarget.getWordWithId(1);
+		System.out.println(word.getWord());
+		System.out.println(word.getLanguage().getLanguage());
 	}
 	
 	public void createGame() {
@@ -62,17 +80,40 @@ public class App implements ServletContextListener {
 	}
 	
 	public void setEndGameData() {
-		Game game = new Game(1, "DenisED1", 110);
-		boolean bool = gameTarget.setEndGameData(game);
+		boolean bool = gameTarget.setEndGameData(game1);
 		System.out.println(bool);
 	}
 	
 	public void getAllLanguages() {
-		LanguageTarget langTarget = new DbLanguageTarget();
 		List<Language> languages = langTarget.getAllLanguages();
 		for(Language language : languages) {
 			System.out.println("Langid: " + language.getLangid());
 			System.out.println("Language: " + language.getLanguage());
 		}
+	}
+	
+	public void getLanguageWithId() {
+		Language language = langTarget.getLanguageWithId(1);
+		System.out.println(language.getLanguage());
+	}
+	
+	public void createRound() {
+		Round round = roundTarget.createRound(word1, game1);
+		System.out.println("RoundID: " + round.getRoundid());
+	}
+	
+	public void getAllRounds() {
+		List<Round> rounds = roundTarget.getAllGameRounds(game1);
+		for(Round round : rounds) {
+			System.out.println("RoundID: " + round.getRoundid());
+			System.out.println("Guesses: " + round.getGuesses());
+			System.out.println("Word: " + round.getWord().getWord());
+		}
+	}
+	
+	public void updateRound() {
+		Round round = new Round(2, 3, game1, word1);
+		boolean bool = roundTarget.updateRound(round);
+		System.out.println(bool);
 	}
 }

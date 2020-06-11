@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface LanguageTarget {
 	List<Language> getAllLanguages();
+
+	Language getLanguageWithId(int langid);
 }

@@ -6,4 +6,6 @@ import lingo.lingogame.domain.Language;
 
 public interface LanguageDao {
 	List<Language> getAllLanguages();
+
+	Language getLanguageWithId(int langid);
 }

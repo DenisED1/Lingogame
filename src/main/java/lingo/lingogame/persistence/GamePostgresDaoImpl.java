@@ -41,7 +41,6 @@ public class GamePostgresDaoImpl extends PostgresBaseDao implements GameDao {
 			String query = "INSERT INTO Game(score) VALUES(0)";
 			PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pstmt.execute();
-			System.out.println(query);
 			ResultSet rs = pstmt.getGeneratedKeys();
 
 			rs.next();

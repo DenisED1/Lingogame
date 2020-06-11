@@ -1,10 +1,17 @@
 package lingo.lingogame.domain;
 
-public class Rounds {
+public class Round {
 	private int roundid;
 	private int guesses;
 	private Game game;
 	private Word word;
+
+	public Round(int roundid, int guesses, Game game, Word word) {
+		this.roundid = roundid;
+		this.guesses = guesses;
+		this.game = game;
+		this.word = word;
+	}
 
 	public int getRoundid() {
 		return roundid;

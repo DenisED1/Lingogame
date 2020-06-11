@@ -31,4 +31,23 @@ public class LanguagePostgresDaoImpl extends PostgresBaseDao implements Language
 
 		return languages;
 	}
+
+	public Language getLanguageWithId(int langid) {
+		Language language = null;
+
+		try (Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Languages WHERE langid = ?");
+			pstmt.setInt(1, langid);
+			ResultSet rs = pstmt.executeQuery();
+
+			rs.next();
+			String languagestr = rs.getString("language");
+
+			language = new Language(langid, languagestr);
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return language;
+	}
 }
