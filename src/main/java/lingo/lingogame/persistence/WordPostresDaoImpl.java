@@ -1,4 +1,4 @@
-package lingo.lingogame.infrastructure;
+package lingo.lingogame.persistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +9,14 @@ import lingo.lingogame.domain.Language;
 import lingo.lingogame.domain.Word;
 
 public class WordPostresDaoImpl extends PostgresBaseDao implements WordDao {
-	public Word GetWord(String table, Language language) {
+	public Word getRandomWord(String table, Language language) {
 		Word word = null;
 		
 		try(Connection con = super.getConnection()){
-			String query = String.format("SELECT * FROM %s WHERE langid = ?", table);
+			String query = String.format("SELECT *" + 
+					"FROM %s WHERE langid = %d OFFSET floor(random() * " + 
+					"(SELECT COUNT(*) FROM %s)) LIMIT 1", table, language.getLangid(),table);
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, language.getLangid());
 			ResultSet rs = pstmt.executeQuery();
 			
 			rs.next();
