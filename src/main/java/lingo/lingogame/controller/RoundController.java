@@ -34,6 +34,7 @@ public class RoundController {
 
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		job.add("roundid", round.getRoundid());
+		job.add("word", round.getWord().getWord());
 
 		jab.add(job);
 
