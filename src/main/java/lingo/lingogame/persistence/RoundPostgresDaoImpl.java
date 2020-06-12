@@ -56,13 +56,13 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 		return result;
 	}
 
-	public List<Round> getAllGameRounds(Game game) {
+	public List<Round> getAllGameRounds(int gameid) {
 		List<Round> rounds = new ArrayList<Round>();
 
 		try (Connection con = super.getConnection()) {
 			String query = "SELECT * FROM Round where gameid = ?";
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, game.getGameid());
+			pstmt.setInt(1, gameid);
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -73,6 +73,7 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 				WordDao wordDao = new WordPostresDaoImpl();
 				Word word = wordDao.getWordWithId(wordid);
 
+				Game game = new Game(gameid);
 				rounds.add(new Round(roundid, guesses, game, word));
 			}
 

@@ -11,5 +11,5 @@ public interface RoundDao {
 
 	boolean updateRound(Round round);
 
-	List<Round> getAllGameRounds(Game game);
+	List<Round> getAllGameRounds(int gameid);
 }

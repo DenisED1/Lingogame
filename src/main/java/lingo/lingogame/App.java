@@ -23,8 +23,8 @@ import lingo.lingogame.persistence.DbWordTarget;
  * Hello world!
  *
  */
-@WebListener
-public class App implements ServletContextListener {
+//@WebListener
+public class App /*implements ServletContextListener*/ {
 	private GameTarget gameTarget = new DbGameTarget();
 	private WordTarget wordTarget = new DbWordTarget();
 	private LanguageTarget langTarget = new DbLanguageTarget();
@@ -34,7 +34,7 @@ public class App implements ServletContextListener {
 	private Game game1 = new Game(1, "DenisED1", 110);
 	private Word word1 = new Word(1, "aagje", 5, language);
 
-	@Override
+	/*@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 	}
@@ -51,7 +51,7 @@ public class App implements ServletContextListener {
 		//createRound();
 		//getAllRounds();
 		updateRound();
-	}
+	}*/
 	
 	public void getRandomWord() {		
 		Word word = wordTarget.getRandomWord(language, 5);

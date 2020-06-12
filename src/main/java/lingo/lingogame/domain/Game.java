@@ -5,6 +5,10 @@ public class Game {
 	private String playername;
 	private int score;
 
+	public Game(int gameid) {
+		this.gameid = gameid;
+	}
+	
 	public Game(int gameid, int score) {
 		this.gameid = gameid;
 		this.score = score;

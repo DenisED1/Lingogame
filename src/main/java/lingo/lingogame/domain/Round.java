@@ -6,6 +6,11 @@ public class Round {
 	private Game game;
 	private Word word;
 
+	public Round(int roundid, int guesses) {
+		this.roundid = roundid;
+		this.guesses = guesses;
+	}
+
 	public Round(int roundid, int guesses, Game game, Word word) {
 		this.roundid = roundid;
 		this.guesses = guesses;

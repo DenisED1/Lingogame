@@ -4,6 +4,10 @@ public class Language {
 	private int langid;
 	private String language;
 	
+	public Language(int langid) {
+		this.langid = langid;
+	}
+	
 	public Language(String language) {
 		this.language = language;
 	}
