@@ -8,15 +8,15 @@ import lingo.lingogame.domain.GameTarget;
 public class DbGameTarget implements GameTarget {
 	private GameDao gameDao = new GamePostgresDaoImpl();
 
-	public List<Game> getAllGames() {
-		return gameDao.getAllGames();
+	public List<Game> getTopFifty() {
+		return gameDao.getTopFifty();
 	}
 
 	public Game createGame() {
 		return gameDao.createGame();
 	}
 
-	public boolean setEndGameData(Game game) {
+	public int setEndGameData(Game game) {
 		return gameDao.setEndGameData(game);
 	}
 

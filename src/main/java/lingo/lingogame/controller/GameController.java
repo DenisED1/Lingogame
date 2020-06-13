@@ -14,49 +14,57 @@ import javax.ws.rs.Produces;
 
 import org.json.JSONObject;
 
+import lingo.lingogame.domain.FeedbackWord;
 import lingo.lingogame.domain.Game;
 import lingo.lingogame.service.GameService;
 
 @Path("/game")
 public class GameController {
 	private GameService service = new GameService();
-	
+
 	@GET
-	@Path("/getAll")
+	@Path("/getTopFifty")
 	@Produces("application/json")
-	public String getAllGames() {
+	public String getTopFifty() {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
-		List<Game> games = service.getAllGames();
-		
-		for(Game game : games) {
+		List<Game> games = service.getTopFifty();
+
+		for (Game game : games) {
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("gameid", game.getGameid());
 			job.add("playername", game.getPlayername());
 			job.add("score", game.getScore());
-			
+
 			jab.add(job);
 		}
-		
+
 		JsonArray array = jab.build();
 		return array.toString();
 	}
-	
+
 	@POST
 	@Path("/create")
 	@Produces("application/json")
-	public String createGame() {
+	public String createGame(String stringJson) {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
-		Game game = service.createGame();
-		
+
+		JSONObject myJson = new JSONObject(stringJson);
+		int langid = myJson.getInt("langid");
+		int length = myJson.getInt("length");
+
+		FeedbackWord feedback = service.createGame(langid, length);
+
 		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("gameid", game.getGameid());
-		
+		job.add("gameid", feedback.getGameid());
+		job.add("roundid", feedback.getRoundid());
+		job.add("givenWord", feedback.getGivenWord());
+
 		jab.add(job);
-		
+
 		JsonArray array = jab.build();
 		return array.toString();
 	}
-	
+
 	@POST
 	@Path("/endGame")
 	@Consumes("application/json")
@@ -68,10 +76,10 @@ public class GameController {
 		int gameid = myJson.getInt("gameid");
 		String playername = myJson.getString("playername");
 
-		boolean bool = service.setEndGameData(gameid, playername);
+		int score = service.setEndGameData(gameid, playername);
 
 		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("bool", bool);
+		job.add("score", score);
 
 		jab.add(job);
 

@@ -12,7 +12,7 @@ import lingo.lingogame.domain.Game;
 import lingo.lingogame.domain.Round;
 import lingo.lingogame.domain.Word;
 
-public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
+public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao {
 	public Round createRound(Word word, Game game) {
 		Round round = null;
 
@@ -30,6 +30,32 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 
 			round = new Round(roundid, guesses, game, word);
 
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+
+		return round;
+	}
+
+	public Round getRoundWithId(int roundid) {
+		Round round = null;
+
+		try (Connection con = super.getConnection()) {
+			String query = "SELECT * FROM Round WHERE roundid = ?";
+			PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, roundid);
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				int guesses = rs.getInt("guesses");
+				int gameid = rs.getInt("gameid");
+				int wordid = rs.getInt("wordid");
+
+				Game game = new Game(gameid);
+				Word word = new Word(wordid);
+
+				round = new Round(roundid, guesses, game, word);
+			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
@@ -69,7 +95,7 @@ public class RoundPostgresDaoImpl extends PostgresBaseDao implements RoundDao{
 				int roundid = rs.getInt("roundid");
 				int guesses = rs.getInt("guesses");
 				int wordid = rs.getInt("wordid");
-				
+
 				WordDao wordDao = new WordPostresDaoImpl();
 				Word word = wordDao.getWordWithId(wordid);
 

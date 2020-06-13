@@ -21,4 +21,8 @@ public class DbRoundTarget implements RoundTarget {
 	public List<Round> getAllGameRounds(int gameid) {
 		return roundDao.getAllGameRounds(gameid);
 	}
+	
+	public Round getRoundWithId(int roundid) {
+		return roundDao.getRoundWithId(roundid);
+	}
 }

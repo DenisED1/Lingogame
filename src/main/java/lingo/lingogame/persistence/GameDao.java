@@ -6,9 +6,9 @@ import lingo.lingogame.domain.Game;
 
 public interface GameDao {
 
-	List<Game> getAllGames();
+	List<Game> getTopFifty();
 
 	Game createGame();
 
-	boolean setEndGameData(Game game);
+	int setEndGameData(Game game);
 }

@@ -1,3 +1,15 @@
-#lingoGame{
+#lingoGame {
+	display: none;
+}
+
+#endGame {
+	display: none;
+}
+
+#scoreboard {
+	display: none;
+}
+
+#nextWord {
 	display: none;
 }

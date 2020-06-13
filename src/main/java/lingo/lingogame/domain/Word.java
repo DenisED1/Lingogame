@@ -6,6 +6,10 @@ public class Word {
 	private int length;
 	private Language language;
 	
+	public Word(int wordid) {
+		this.wordid = wordid;
+	}
+	
 	public Word(String word, Language language) {
 		this.word = word;
 		this.language = language;

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import lingo.lingogame.domain.Language;
 import lingo.lingogame.domain.Word;
@@ -13,17 +14,18 @@ public class WordPostresDaoImpl extends PostgresBaseDao implements WordDao {
 		Word word = null;
 
 		try (Connection con = super.getConnection()) {
-			String query = String
-					.format("SELECT * FROM Word WHERE langid = %d AND length = %d OFFSET floor(random() * "
-							+ "(SELECT COUNT(*) FROM Word)) LIMIT 1", language.getLangid(), length);
-			PreparedStatement pstmt = con.prepareStatement(query);
+			String query = "SELECT * FROM Word WHERE langid = ? AND length = ? ORDER BY random() LIMIT 1";
+			PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, language.getLangid());
+			pstmt.setInt(2, length);
 			ResultSet rs = pstmt.executeQuery();
 
-			rs.next();
-			int wordid = rs.getInt("wordid");
-			String wordstr = rs.getString("word");
-
-			word = new Word(wordid, wordstr, length, language);
+			if (rs.next()) {
+				int wordid = rs.getInt("wordid");
+				String wordstr = rs.getString("word");
+				
+				word = new Word(wordid, wordstr, length, language);
+			}
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -44,9 +46,8 @@ public class WordPostresDaoImpl extends PostgresBaseDao implements WordDao {
 			String wordstr = rs.getString("word");
 			int length = rs.getInt("length");
 			int langid = rs.getInt("langid");
-			
-			LanguageDao langDao = new LanguagePostgresDaoImpl();
-			Language language = langDao.getLanguageWithId(langid);
+
+			Language language = new Language(langid);
 
 			word = new Word(wordid, wordstr, length, language);
 
