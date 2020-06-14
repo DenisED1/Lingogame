@@ -37,9 +37,7 @@ function selectLanguage(){
 }
 
 function createGame(){
-	if(length == null){
-		length = 5
-	}
+	setLength();
 	lingoGame.style.display = "block";
 	chooseLanguage.style.display = "none";
 	
@@ -120,6 +118,8 @@ function nextRound(){
 	    table.deleteRow(tableHeaderRowCount);
 	}
 	
+	setLength();
+	
 	document.getElementById("guessedWord").value = "";
 	nextWord.style.display = "none";
 	
@@ -194,6 +194,21 @@ function openScoreboard(){
 			document.getElementById('scoreTable').appendChild(rij);
 		}
 	})
+}
+
+function setLength(){
+	if(length == null){
+		length = 5;
+	}
+	if(length == 5){
+		length = 6;
+	}
+	if(length == 6){
+		length = 7;
+	}
+	if(length == 7){
+		length = 5;
+	}
 }
 
 function mainMenu(){
