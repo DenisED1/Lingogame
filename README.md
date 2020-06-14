@@ -2,3 +2,6 @@ Netzoals met lingowords is testen niet voltooid omdat ik niet genoeg tijd meer o
 
 heroku link:
 https://denisedelbroek-lingogame.herokuapp.com/
+
+codecov: (weet niet of deze link zo werk)
+https://codecov.io/gh/DenisED1/Lingogame
