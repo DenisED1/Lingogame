@@ -26,14 +26,26 @@ public class WordTest {
 	}
 
 	@Test
-	@DisplayName("gives the word")
+	@DisplayName("gives the wordstring")
 	public void getWord() {
-		Assertions.assertEquals(word, word.getWord());
+		Assertions.assertEquals(wordstr, word.getWord());
 	}
 
 	@Test
 	@DisplayName("gives word length")
 	public void getLength() {
 		Assertions.assertEquals(length, word.getLength());
+	}
+	
+	@Test
+	@DisplayName("gives word language langid")
+	public void getLangid() {
+		Assertions.assertEquals(langid, word.getLanguage().getLangid());
+	}
+	
+	@Test
+	@DisplayName("gives word language")
+	public void getLanguage() {
+		Assertions.assertEquals(langid, word.getLanguage().getLanguage());
 	}
 }
