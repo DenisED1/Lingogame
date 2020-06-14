@@ -46,6 +46,6 @@ public class WordTest {
 	@Test
 	@DisplayName("gives word language")
 	public void getLanguage() {
-		Assertions.assertEquals(langid, word.getLanguage().getLanguage());
+		Assertions.assertEquals(langstr, word.getLanguage().getLanguage());
 	}
 }
