@@ -1,7 +1,5 @@
 package lingo.lingogame.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.*;
 
 @DisplayName("Word")
@@ -24,18 +22,18 @@ public class WordTest {
 	@Test
 	@DisplayName("gives the wordid")
 	public void getWordid() {
-		assertEquals(wordid, word.getWordid());
+		Assertions.assertEquals(wordid, word.getWordid());
 	}
 
 	@Test
 	@DisplayName("gives the word")
 	public void getWord() {
-		assertEquals(word, word.getWord());
+		Assertions.assertEquals(word, word.getWord());
 	}
 
 	@Test
 	@DisplayName("gives word length")
 	public void getLength() {
-		assertEquals(length, word.getLength());
+		Assertions.assertEquals(length, word.getLength());
 	}
 }
