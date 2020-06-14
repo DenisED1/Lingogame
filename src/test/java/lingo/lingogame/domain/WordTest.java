@@ -33,19 +33,19 @@ public class WordTest {
 
 	@Test
 	@DisplayName("gives word length")
-	public void getLength() {
+	public void getWordLength() {
 		Assertions.assertEquals(length, word.getLength());
 	}
 	
 	@Test
 	@DisplayName("gives word language langid")
-	public void getLangid() {
+	public void getWordLangid() {
 		Assertions.assertEquals(langid, word.getLanguage().getLangid());
 	}
 	
 	@Test
 	@DisplayName("gives word language")
-	public void getLanguage() {
+	public void getWordLanguage() {
 		Assertions.assertEquals(langstr, word.getLanguage().getLanguage());
 	}
 }
