@@ -12,7 +12,7 @@ var score = null;
 var playername = null;
 
 function initPage(){
-	fetch('/restservices/language/getAll', {method: 'GET'})
+	fetch('restservices/language/getAll', {method: 'GET'})
 	.then(response => response.json())
 	.then(function(myJson){
 		for (const object of myJson){
@@ -42,7 +42,7 @@ function createGame(){
 	lingoGame.style.display = "block";
 	chooseLanguage.style.display = "none";
 	
-	fetch('/restservices/game/create', {
+	fetch('restservices/game/create', {
 		method: 'POST',
 		body: JSON.stringify({
 			langid: langid,
@@ -71,7 +71,7 @@ function createGame(){
 function checkGuess(){
 	var guessedWord = document.getElementById("guessedWord").value;
 	
-	fetch('/restservices/round/check', {
+	fetch('restservices/round/check', {
 		method: 'POST',
 		body: JSON.stringify({
 			roundid: roundid,
@@ -124,7 +124,7 @@ function nextRound(){
 	document.getElementById("guessedWord").value = "";
 	nextWord.style.display = "none";
 	
-	fetch('/restservices/round/next', {
+	fetch('restservices/round/next', {
 		method: 'POST',
 		body: JSON.stringify({
 			gameid: gameid,
@@ -153,7 +153,7 @@ function nextRound(){
 function saveScore(){
 	playername = document.getElementById("playername").value;
 	
-	fetch('/restservices/game/endGame', {
+	fetch('restservices/game/endGame', {
 		method: 'POST',
 		body: JSON.stringify({
 			gameid: gameid,
@@ -177,7 +177,7 @@ function openScoreboard(){
 	document.getElementById("playernameLbl").innerHTML = playername;
 	document.getElementById("scoreLbl").innerHTML = score;
 	
-	fetch('/restservices/game/getTopFifty', {method: 'GET'})
+	fetch('restservices/game/getTopFifty', {method: 'GET'})
 	.then(response => response.json())
 	.then(function(myJson){
 		for (const object of myJson){
