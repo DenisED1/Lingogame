@@ -38,6 +38,7 @@ function selectLanguage(){
 
 function createGame(){
 	setLength();
+	
 	lingoGame.style.display = "block";
 	chooseLanguage.style.display = "none";
 	
